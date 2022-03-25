@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: appcake-pod
+  labels:
+    app: appcake
+    tier: backend
+
+spec:
+  securityContext:
+    runAsUser: 1000
+  serviceAccountName: dashboard-sa
+  # nodeSelector:
+  #   size: Large
+  tolerations:
+    - key: app
+      value: blue
+      effect: NoSchedule
+      operator: Equal
+      tolerationSeconds: 0
+  containers:
+    - name: appcake-container
+      image: nginx
+
+      envFrom:
+        - configMapRef:
+            name: myapp-config
+        # - secretRef:
+        #     name: myapp-secret
+      volumeMounts:
+        - name: up-secret-volume
+          mountPath: /opap
+      securityContext:
+        capabilities:
+          add:
+            - 'MAC_ADMIN'
+            - 'SYS_TIME'
+            - 'NET_ADMIN'
+      # Events:
+      #   Type     Reason            Age   From               Message
+      #   ----     ------            ----  ----               -------
+      #   Warning  FailedScheduling  16s   default-scheduler  0/1 nodes are available: 1 Insufficient cpu, 1 Insufficient memory.
+      # resources:
+      #   requests:
+      #     memory: "20Gi"
+      #     cpu: 20
+  volumes:
+    - name: up-secret-volume
+      secret:
+        secretName: myapp-secret

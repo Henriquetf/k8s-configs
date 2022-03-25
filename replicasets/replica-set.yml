@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: appcake-replicaset
+  labels:
+    app: appcake-v2
+    tier: frontend
+
+spec:
+  selector:
+    matchLabels:
+      app: appcake-v2
+
+  template:
+    metadata:
+      name: appcake-pod
+      labels:
+        app: appcake-v2
+        tier: frontend
+
+    spec:
+      containers:
+        - name: appcake-container
+          image: nginx
+
+  replicas: 1

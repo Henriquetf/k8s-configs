@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: appcake-deployment
+  labels:
+    app: appcake-v2
+    tier: frontend
+
+spec:
+  selector:
+    matchLabels:
+      app: appcake
+      env: production
+
+  template:
+    metadata:
+      name: appcake-pod
+      labels:
+        app: appcake
+        env: production
+        tier: frontend
+
+    spec:
+      containers:
+        - name: appcake-container
+          image: nginx
+          command:
+            - 'nginx'
+          args:
+            - '--foreground'

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-webapp
+  labels:
+    name: simple-webapp
+    function: front-end
+spec:
+  containers:
+    - name: simple-webapp
+      image: simple-webapp
+      resources:
+        limits:
+          memory: '128Mi'
+          cpu: '500m'
+      ports:
+        - containerPort: 8080
