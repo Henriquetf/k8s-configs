@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: appcake
+  labels:
+    name: appcake
+spec:
+  containers:
+  - name: appcake
+    image: nginx
+    ports:
+      - containerPort: 80
