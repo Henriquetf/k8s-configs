@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: clam
+  labels:
+    name: clam
+spec:
+  containers:
+    - name: clam
+      image: nginx
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: "/tmp/steamed-clams"
+          name: clamsy
+  volumes:
+    - name: clamsy
+      persistentVolumeClaim:
+        claimName: steamed-clams
