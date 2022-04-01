@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-github
+spec:
+  selector:
+    app: service-github
+  ports:
+    - port: 3000
+      targetPort: 443
+  type: ExternalName
+  externalName: github.com
